@@ -178,10 +178,10 @@
 			onAnimationProgress: function(){},
 
 			// Function - Will fire on animation completion.
-			onAnimationComplete: function(){}
+			onAnimationComplete: function(){},
 
-            //String - Show the x Labels
-            showXLabels : true
+      //String - Show the x Labels
+      showXLabels : true
 		}
 	};
 
