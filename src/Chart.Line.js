@@ -55,8 +55,11 @@
 		//Boolean - Whether to horizontally center the label and point dot inside the grid
 		offsetGridLines : false,
 
-        //String - Show the x Labels
-        showXLabels : true
+    //String - Show the x Labels
+		showXLabels : true,
+
+    //String - The color of the label background
+    labelBgColor : 'rgba(255,255,255,0)'
 
 	};
 
@@ -211,7 +214,9 @@
 				padding: (this.options.showScale) ? 0 : this.options.pointDotRadius + this.options.pointDotStrokeWidth,
 				showLabels : this.options.scaleShowLabels,
 				display : this.options.showScale,
-                showXLabels : this.options.showXLabels
+				showXLabels : this.options.showXLabels,
+        labelBgColor: this.options.labelBgColor,
+        minYLabelWidth: this.options.minYLabelWidth
 			};
 
 			if (this.options.scaleOverride){

@@ -1,7 +1,7 @@
 /*!
  * Chart.js
  * http://chartjs.org/
- * Version: 1.1.0
+ * Version: 1.1.1
  *
  * Copyright 2015 Nick Downie
  * Released under the MIT license
@@ -1561,6 +1561,10 @@
 				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
 			}
 			this.yLabelWidth = (this.display && this.showLabels) ? longestText(this.ctx,this.font,this.yLabels) + 10 : 0;
+
+			if(this.yLabelWidth < this.minYLabelWidth) {
+          this.yLabelWidth = this.minYLabelWidth;
+      }
 		},
 		addXLabel : function(label){
 			this.xLabels.push(label);
@@ -1709,8 +1713,17 @@
 				yLabelGap = (this.endPoint - this.startPoint) / this.steps,
 				xStart = Math.round(this.xScalePaddingLeft);
 			if (this.display){
-				ctx.fillStyle = this.textColor;
+
 				ctx.font = this.font;
+
+				ctx.fillStyle = this.textColor;
+
+				ctx.fillStyle = this.labelBgColor;
+
+        ctx.fillRect(0, 0, this.yLabelWidth, ctx.canvas.clientHeight);
+
+        ctx.fillStyle = this.textColor;				
+
 				each(this.yLabels,function(labelString,index){
 					var yLabelCenter = this.endPoint - (yLabelGap * index),
 						linePositionY = Math.round(yLabelCenter),
@@ -2754,8 +2767,11 @@
 		//Boolean - Whether to horizontally center the label and point dot inside the grid
 		offsetGridLines : false,
 
-        //String - Show the x Labels
-        showXLabels : true
+    //String - Show the x Labels
+		showXLabels : true,
+
+    //String - The color of the label background
+    labelBgColor : 'rgba(255,255,255,0)'
 
 	};
 
@@ -2910,7 +2926,9 @@
 				padding: (this.options.showScale) ? 0 : this.options.pointDotRadius + this.options.pointDotStrokeWidth,
 				showLabels : this.options.scaleShowLabels,
 				display : this.options.showScale,
-                showXLabels : this.options.showXLabels
+				showXLabels : this.options.showXLabels,
+        labelBgColor: this.options.labelBgColor,
+        minYLabelWidth: this.options.minYLabelWidth
 			};
 
 			if (this.options.scaleOverride){

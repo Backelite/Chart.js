@@ -1561,6 +1561,10 @@
 				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
 			}
 			this.yLabelWidth = (this.display && this.showLabels) ? longestText(this.ctx,this.font,this.yLabels) + 10 : 0;
+
+			if(this.yLabelWidth < this.minYLabelWidth) {
+          this.yLabelWidth = this.minYLabelWidth;
+      }
 		},
 		addXLabel : function(label){
 			this.xLabels.push(label);
@@ -1709,8 +1713,17 @@
 				yLabelGap = (this.endPoint - this.startPoint) / this.steps,
 				xStart = Math.round(this.xScalePaddingLeft);
 			if (this.display){
-				ctx.fillStyle = this.textColor;
+
 				ctx.font = this.font;
+
+				ctx.fillStyle = this.textColor;
+
+				ctx.fillStyle = this.labelBgColor;
+
+        ctx.fillRect(0, 0, this.yLabelWidth, ctx.canvas.clientHeight);
+
+        ctx.fillStyle = this.textColor;				
+
 				each(this.yLabels,function(labelString,index){
 					var yLabelCenter = this.endPoint - (yLabelGap * index),
 						linePositionY = Math.round(yLabelCenter),
